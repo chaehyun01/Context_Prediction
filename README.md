@@ -21,7 +21,7 @@ Context Prediction은 이러한 상황에서 Label 데이터 없이 이미지의
 
 Context Prediction은 input image 패치의 상대 위치를 맞추도록 학습하는 방법을 제안하는 방법입니다.<br/>
 그림과 같이 모델에게 파란색 네모의 이미지 패치와 8개의 빨간색 이미지 패치 중 한개를주고서 몇번째 패치인지 맞추도록 학습합니다.<br/>
-![CP1](https://github.com/chaehyun01/Context_Prediction/assets/146818726/39e97660-633c-4806-bad8-f64f2ed23177)
+![CP1](https://github.com/chaehyun01/Context_Prediction/assets/146818726/39e97660-633c-4806-bad8-f64f2ed23177<br/>
 모델은 크게 2가지의 CNN으로 구성됩니다.input으로 받는 이미지가 2개이기 때문입니다.<br/>
 9개의 Image Patch중 중앙의 패치와 랜덤으로 선택한 이미지 패치가 각각의 CNN을 통과하도록 되어있습니다. <br/>이렇게 각각 연산 되어 나온 Feature는 fc7에서 합쳐져서 최종적으로는 파란패치를 제외한 8가지의 종류(fc9)를 맞추는 구조로 되어있습니다.
 ![CP2](https://github.com/chaehyun01/Context_Prediction/assets/146818726/1ff42ea0-2ead-4270-b680-5874a55d91ce)
