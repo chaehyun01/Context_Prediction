@@ -30,27 +30,42 @@ Context Prediction은 이러한 상황에서 Label 데이터 없이 이미지의
 반면 결과가 1이라면 상단에 위치한 Patch를 의미합니다. <br/>
 ![CP2](https://github.com/chaehyun01/Context_Prediction/assets/146818726/1ff42ea0-2ead-4270-b680-5874a55d91ce)
 <br/>
-## Test Runnig
-1. python 내부에서 train.py 을 실행합니다. 이렇게 하면 2000번 반복할 때마다 스냅샷을 생성하는 무한 훈련 루프가 시작됩니다. <br/>
-
-코드는 GPU 0에서 실행됩니다. 환경 변수 CUDA_VISIVE_DEVICE를 사용하여 GPU를 변경할 수 있습니다.<br/>
-
-모든 테스트는 python 2.7로 수행되었습니다.('train.py ')를 사용하여 ipython 내부에서 실행하는 것이 좋습니다.<br/>
-
-2. train.py 스크립트를 중지하려면 코드를 실행한 디렉터리에 train_quit 파일을 생성해야 합니다.<br/>
-   
-코드가 백그라운드 프로세스를 시작하여 데이터를 로드하고 Ctrl+C를 통해 코드가 중단되면 이러한 백그라운드 스레드가 종료된다는 보장이 어렵기 때문에 이러한 우회 접근 방식이 필요합니다.<br/>
-
-train.py 이 종료된 후 다시 started하는 경우 출력 디렉토리를 검사하고 반복 횟수가 가장 많은 스냅샷부터 계속 시도합니다.<br/>
-
-3. 코드를 실행한 디렉터리에 train_ pause 파일을 생성하면 언제든지 훈련을 일시 중지할 수 있습니다.<br/>
-
-그러면 pycaffe을 사용하여 네트워크 상태를 검사할 수 있습니다.<br/>
-
-4. 실험을 위해 1.7M 반복 실험을 실행했습니다. 이 시점 이후에 출력에서 debatchnorm.py 을 실행할 수 있습니다.<br/>
-   
-실행한 후에는 미세 tuned가 가능한 모델이 있습니다. 미세 조정 전에 데이터 의존적 초기화 및 보정 절차 [Krähenbühl et al.]를 사용하는 것이 좋습니다.<br/>
-
-debatchnorm.py 을 사용하면 scaled 가중치가 심하게 발생하기 때문입니다.<br/>
-
-이 절차를 사용하여 훈련되고 VOC2007에서 fast-rcnn으로 미세 조정된 네트워크는 51.4%의 MAP를 달성합니다.<br/>
+## 코드
+```patch_dim = 50
+```gap = 30
+```patch_loc_arr = [(1, 1), (1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2), (3, 3)]
+```
+```offset_x, offset_y = image.shape[0] - (patch_dim*3 + gap*2), image.shape[1] - (patch_dim*3 + gap*2)
+```start_grid_x, start_grid_y = np.random.randint(0, offset_x), np.random.randint(0, offset_y)
+```
+```loc = np.random.randint(len(patch_loc_arr))
+```t_x, t_y = patch_loc_arr[loc]
+```
+```plt.imshow(image)
+```plt.show()
+```fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(5,5))
+```# print(ax)
+```
+```for i, (tempx, tempy) in enumerate(patch_loc_arr):
+```    if t_x == tempx and t_y == tempy:
+```        tempx, tempy = patch_loc_arr[i]
+```
+```        patch_x_pt = start_grid_x + patch_dim * (tempx-1) + gap * (tempx-1)
+```        patch_y_pt = start_grid_y + patch_dim * (tempy-1) + gap * (tempy-1)
+```
+```        ax[tempx-1, tempy-1].imshow(image[patch_x_pt:patch_x_pt+50, patch_y_pt:patch_y_pt+50])
+```        ax[tempx-1, tempy-1].set_title(str(patch_loc_arr[i]))
+```        ax[tempx-1, tempy-1].set_xticks([])
+```        ax[tempx-1, tempy-1].set_yticks([])
+```    else:
+```        ax[tempx-1, tempy-1].set_title(str(patch_loc_arr[i]))
+```        ax[tempx-1, tempy-1].set_xticks([])
+```        ax[tempx-1, tempy-1].set_yticks([])
+```
+```# Add patch to the center (Uniform patch)
+```patch_x_pt = start_grid_x + patch_dim * (2-1) + gap * (2-1)
+```patch_y_pt = start_grid_y + patch_dim * (2-1) + gap * (2-1)
+```ax[2-1,2-1].imshow(image[patch_x_pt:patch_x_pt+50, patch_y_pt:patch_y_pt+50])
+```ax[2-1,2-1].set_title(str('(2, 2) - Center'))
+```ax[2-1,2-1].set_xticks([])
+```ax[2-1,2-1].set_yticks([])
