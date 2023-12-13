@@ -21,5 +21,5 @@ Context Prediction은 이러한 상황에서 Label 데이터 없이 이미지의
 
 Context Prediction은 input image 패치의 상대 위치를 맞추도록 학습하는 방법을 제안<br/>
 그림과 같이 모델에게 파란색 네모의 이미지 패치와 8개의 빨간색 이미지 패치 중 한개를주고서 몇번째 패치인지 맞추도록 학습<br/>
-
+CP1.jpg
 
