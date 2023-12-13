@@ -31,41 +31,43 @@ Context Prediction은 이러한 상황에서 Label 데이터 없이 이미지의
 ![CP2](https://github.com/chaehyun01/Context_Prediction/assets/146818726/1ff42ea0-2ead-4270-b680-5874a55d91ce)
 <br/>
 ## 코드
-```patch_dim = 50
-```gap = 30
-```patch_loc_arr = [(1, 1), (1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2), (3, 3)]
 ```
-```offset_x, offset_y = image.shape[0] - (patch_dim*3 + gap*2), image.shape[1] - (patch_dim*3 + gap*2)
-```start_grid_x, start_grid_y = np.random.randint(0, offset_x), np.random.randint(0, offset_y)
+patch_dim = 50
+gap = 30
+patch_loc_arr = [(1, 1), (1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2), (3, 3)]
+
+offset_x, offset_y = image.shape[0] - (patch_dim*3 + gap*2), image.shape[1] - (patch_dim*3 + gap*2)
+start_grid_x, start_grid_y = np.random.randint(0, offset_x), np.random.randint(0, offset_y)
+
+loc = np.random.randint(len(patch_loc_arr))
+t_x, t_y = patch_loc_arr[loc]
+
+plt.imshow(image)
+plt.show()
+fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(5,5))
+# print(ax)
+
+for i, (tempx, tempy) in enumerate(patch_loc_arr):
+    if t_x == tempx and t_y == tempy:
+        tempx, tempy = patch_loc_arr[i]
+
+        patch_x_pt = start_grid_x + patch_dim * (tempx-1) + gap * (tempx-1)
+        patch_y_pt = start_grid_y + patch_dim * (tempy-1) + gap * (tempy-1)
+
+        ax[tempx-1, tempy-1].imshow(image[patch_x_pt:patch_x_pt+50, patch_y_pt:patch_y_pt+50])
+        ax[tempx-1, tempy-1].set_title(str(patch_loc_arr[i]))
+        ax[tempx-1, tempy-1].set_xticks([])
+        ax[tempx-1, tempy-1].set_yticks([])
+    else:
+        ax[tempx-1, tempy-1].set_title(str(patch_loc_arr[i]))
+        ax[tempx-1, tempy-1].set_xticks([])
+        ax[tempx-1, tempy-1].set_yticks([])
+
+# Add patch to the center (Uniform patch)
+patch_x_pt = start_grid_x + patch_dim * (2-1) + gap * (2-1)
+patch_y_pt = start_grid_y + patch_dim * (2-1) + gap * (2-1)
+ax[2-1,2-1].imshow(image[patch_x_pt:patch_x_pt+50, patch_y_pt:patch_y_pt+50])
+ax[2-1,2-1].set_title(str('(2, 2) - Center'))
+ax[2-1,2-1].set_xticks([])
+ax[2-1,2-1].set_yticks([])
 ```
-```loc = np.random.randint(len(patch_loc_arr))
-```t_x, t_y = patch_loc_arr[loc]
-```
-```plt.imshow(image)
-```plt.show()
-```fig, ax = plt.subplots(nrows=3, ncols=3, figsize=(5,5))
-```# print(ax)
-```
-```for i, (tempx, tempy) in enumerate(patch_loc_arr):
-```    if t_x == tempx and t_y == tempy:
-```        tempx, tempy = patch_loc_arr[i]
-```
-```        patch_x_pt = start_grid_x + patch_dim * (tempx-1) + gap * (tempx-1)
-```        patch_y_pt = start_grid_y + patch_dim * (tempy-1) + gap * (tempy-1)
-```
-```        ax[tempx-1, tempy-1].imshow(image[patch_x_pt:patch_x_pt+50, patch_y_pt:patch_y_pt+50])
-```        ax[tempx-1, tempy-1].set_title(str(patch_loc_arr[i]))
-```        ax[tempx-1, tempy-1].set_xticks([])
-```        ax[tempx-1, tempy-1].set_yticks([])
-```    else:
-```        ax[tempx-1, tempy-1].set_title(str(patch_loc_arr[i]))
-```        ax[tempx-1, tempy-1].set_xticks([])
-```        ax[tempx-1, tempy-1].set_yticks([])
-```
-```# Add patch to the center (Uniform patch)
-```patch_x_pt = start_grid_x + patch_dim * (2-1) + gap * (2-1)
-```patch_y_pt = start_grid_y + patch_dim * (2-1) + gap * (2-1)
-```ax[2-1,2-1].imshow(image[patch_x_pt:patch_x_pt+50, patch_y_pt:patch_y_pt+50])
-```ax[2-1,2-1].set_title(str('(2, 2) - Center'))
-```ax[2-1,2-1].set_xticks([])
-```ax[2-1,2-1].set_yticks([])
