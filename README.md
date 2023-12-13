@@ -1,7 +1,6 @@
 # Context_Prediction
-self-supervised learning의 한 종류
-
-self-supervised learning이란 라벨이 없는 untagged data를 기반으로 한 학습, 자기 스스로 학습데이터에 대한 분류를 수행
+self-supervised learning의 한 종류<br/>
+self-supervised learning이란 라벨이 없는 untagged data를 기반으로 한 학습, 자기 스스로 학습데이터에 대한 분류를 수행<br/>
 기존 학습법은 unsupervised learning, supervised learning으로 나뉨. 
 두 학습법의 차이는 태그 데이터의 유무.
 unsupervised learning은 태그데이터가 없기에 실제 데이터가 어떠한 범주에 해당하는지 모른 채 데이터 특징에 따라 클러스터링수행
