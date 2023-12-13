@@ -23,3 +23,4 @@ Context Prediction은 input image 패치의 상대 위치를 맞추도록 학습
 그림과 같이 모델에게 파란색 네모의 이미지 패치와 8개의 빨간색 이미지 패치 중 한개를주고서 몇번째 패치인지 맞추도록 학습합니다.<br/>
 ![CP1](https://github.com/chaehyun01/Context_Prediction/assets/146818726/39e97660-633c-4806-bad8-f64f2ed23177)
 
+![CP2](https://github.com/chaehyun01/Context_Prediction/assets/146818726/1ff42ea0-2ead-4270-b680-5874a55d91ce)
