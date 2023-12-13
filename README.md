@@ -71,3 +71,13 @@ ax[2-1,2-1].set_title(str('(2, 2) - Center'))
 ax[2-1,2-1].set_xticks([])
 ax[2-1,2-1].set_yticks([])
 ```
+
+## 성능특징
+1.  Scratch 학습 방법보다 Context Prediction의 성능이 좋습니다.<br/>
+VOC를 바로 학습 하는것 보다 Context Prediction을 학습하고 VOC를 학습 할때의 성능이 더 좋습니다.<br/>
+Context Prediction을 학습하는 과정에서 이미지 특성을 구분할 수 있습니다.<br/>
+
+2. Supervised Learning 방식보다는 성능이 떨어집니다.<br/>
+ImageNet R-CNN 더 높은 성능을 보입니다.<br/>
+이 방법은 ImageNet Label로 Pretrain을 하고 VOC를 학습한 방법으로<br/>
+Context Prediction이 비록 성능은 낮지만 초창기 Self Supervised Learning 방식임을 감안하면 놀라운 성능입니다.
